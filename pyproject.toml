@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "vibecoded-mc-renderer"
+name = "mcrender-block"
 version = "0.1.0"
 description = "CLI tool for rendering Minecraft blocks from jar files"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "VibeCoded"}
+    {name = "almajd3713"}
 ]
 keywords = ["minecraft", "renderer", "isometric", "gregtech", "modded", "cli"]
 classifiers = [
