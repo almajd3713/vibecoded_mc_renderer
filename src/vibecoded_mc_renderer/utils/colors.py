@@ -1,6 +1,6 @@
 """Color utilities for texture tinting."""
 
-from typing import Tuple
+from typing import Tuple, Optional
 import numpy as np
 from PIL import Image
 
@@ -58,7 +58,7 @@ def blend_colors(color1: Tuple[int, int, int], color2: Tuple[int, int, int], alp
     return (r, g, b)
 
 
-def get_tint_for_block(block_id: str) -> Tuple[int, int, int] | None:
+def get_tint_for_block(block_id: str) -> Optional[Tuple[int, int, int]]:
     """
     Get the default tint color for a block if it requires tinting.
 
