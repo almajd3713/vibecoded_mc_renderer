@@ -9,14 +9,16 @@ import pyrr
 class BlockRenderer3D:
     """OpenGL-based 3D block renderer for perfect isometric projection."""
     
-    def __init__(self, output_size: int = 128):
+    def __init__(self, output_size: int = 128, camera_height: float = 1.5):
         """
         Initialize the 3D renderer.
         
         Args:
             output_size: Size of output images
+            camera_height: Camera Y position (1.0=acute/sharp, 1.5=standard, 2.0=wide/top-down)
         """
         self.output_size = output_size
+        self.camera_height = camera_height
         
         # Create OpenGL context (standalone, no window needed)
         self.ctx = moderngl.create_standalone_context()
@@ -87,8 +89,11 @@ class BlockRenderer3D:
         # Use orthographic projection for true isometric (no perspective)
         
         # View matrix: position camera for isometric view
-        # Look from (1, 1, 1) toward (0, 0, 0)
-        eye = pyrr.Vector3([1.5, 1.5, 1.5])
+        # camera_height controls the viewing angle:
+        #   1.0 = acute/sharp angle (more side view)
+        #   1.5 = standard isometric (default)
+        #   2.0 = wide angle (more top-down view)
+        eye = pyrr.Vector3([1.5, self.camera_height, 1.5])
         target = pyrr.Vector3([0.0, 0.0, 0.0])
         up = pyrr.Vector3([0.0, 1.0, 0.0])
         self.view = pyrr.matrix44.create_look_at(eye, target, up)

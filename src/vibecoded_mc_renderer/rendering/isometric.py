@@ -19,6 +19,7 @@ def create_isometric_cube(
     left_texture: Image.Image,
     right_texture: Image.Image,
     output_size: int = 128,
+    camera_height: float = 1.5,
 ) -> Image.Image:
     """
     Create an isometric cube from three face textures.
@@ -28,6 +29,7 @@ def create_isometric_cube(
         left_texture: Texture for the left face (typically north or west)
         right_texture: Texture for the right face (typically east or south)
         output_size: Size of the output image (will be square)
+        camera_height: Camera Y position (1.0=acute/sharp, 1.5=standard, 2.0=wide/top-down)
 
     Returns:
         Isometric rendered block image
@@ -35,7 +37,7 @@ def create_isometric_cube(
     # Use 3D renderer if available
     if HAS_3D_RENDERER:
         try:
-            with BlockRenderer3D(output_size=output_size) as renderer:
+            with BlockRenderer3D(output_size=output_size, camera_height=camera_height) as renderer:
                 return renderer.render_cube(top_texture, left_texture, right_texture)
         except Exception as e:
             # Fall back to 2D rendering if 3D fails
