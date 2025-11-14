@@ -12,6 +12,24 @@ license = {text = "MIT"}
 authors = [
     {name = "VibeCoded"}
 ]
+keywords = ["minecraft", "renderer", "isometric", "gregtech", "modded", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Games/Entertainment",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "Pillow>=9.0.0",
     "typer>=0.9.0",
@@ -20,6 +38,11 @@ dependencies = [
     "moderngl>=5.6.0",
     "pyrr>=0.10.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/vibecoded/vibecoded-mc-renderer"
+Repository = "https://github.com/vibecoded/vibecoded-mc-renderer"
+Issues = "https://github.com/vibecoded/vibecoded-mc-renderer/issues"
 
 [project.optional-dependencies]
 dev = [
