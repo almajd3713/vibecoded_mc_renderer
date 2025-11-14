@@ -20,6 +20,7 @@ jobs:
       url: ${{ 'https://pypi.org/p/mcrender-block' }}
     permissions:
       id-token: write  # For trusted publishing
+      contents: write  # For uploading release assets
     
     steps:
     - uses: actions/checkout@v4
