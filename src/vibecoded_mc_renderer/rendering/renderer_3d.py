@@ -9,16 +9,18 @@ import pyrr
 class BlockRenderer3D:
     """OpenGL-based 3D block renderer for perfect isometric projection."""
     
-    def __init__(self, output_size: int = 128, camera_height: float = 1.5):
+    def __init__(self, output_size: int = 128, camera_height: float = 1.5, samples: int = 4):
         """
         Initialize the 3D renderer.
         
         Args:
             output_size: Size of output images
             camera_height: Camera Y position (1.0=acute/sharp, 1.5=standard, 2.0=wide/top-down)
+            samples: MSAA samples for anti-aliasing (0=off, 2/4/8/16=quality)
         """
         self.output_size = output_size
         self.camera_height = camera_height
+        self.samples = samples
         
         # Create OpenGL context (standalone, no window needed)
         self.ctx = moderngl.create_standalone_context()
@@ -64,13 +66,29 @@ class BlockRenderer3D:
             fragment_shader=fragment_shader,
         )
         
-        # Create framebuffer for offscreen rendering
-        self.fbo = self.ctx.framebuffer(
-            color_attachments=[
-                self.ctx.texture((output_size, output_size), 4)
-            ],
-            depth_attachment=self.ctx.depth_renderbuffer((output_size, output_size))
-        )
+        # Create framebuffers for offscreen rendering with optional MSAA
+        if samples > 0:
+            # Multisample framebuffer for anti-aliasing
+            self.msaa_fbo = self.ctx.framebuffer(
+                color_attachments=[
+                    self.ctx.texture((output_size, output_size), 4, samples=samples)
+                ],
+                depth_attachment=self.ctx.depth_renderbuffer((output_size, output_size), samples=samples)
+            )
+            # Regular FBO for final resolved output
+            self.fbo = self.ctx.framebuffer(
+                color_attachments=[
+                    self.ctx.texture((output_size, output_size), 4)
+                ]
+            )
+        else:
+            self.msaa_fbo = None
+            self.fbo = self.ctx.framebuffer(
+                color_attachments=[
+                    self.ctx.texture((output_size, output_size), 4)
+                ],
+                depth_attachment=self.ctx.depth_renderbuffer((output_size, output_size))
+            )
         
         # Enable features
         self.ctx.enable(moderngl.DEPTH_TEST)
@@ -188,8 +206,11 @@ class BlockRenderer3D:
         Returns:
             Rendered image
         """
-        # Use the framebuffer
-        self.fbo.use()
+        # Use MSAA framebuffer if available, otherwise regular FBO
+        if self.msaa_fbo:
+            self.msaa_fbo.use()
+        else:
+            self.fbo.use()
         
         # Clear with transparency
         self.ctx.clear(0.0, 0.0, 0.0, 0.0)
@@ -225,6 +246,10 @@ class BlockRenderer3D:
         right_tex.use(0)
         self.program['shade'] = 0.9
         self._render_face('right')
+        
+        # Resolve MSAA to regular framebuffer if needed
+        if self.msaa_fbo:
+            self.ctx.copy_framebuffer(self.fbo, self.msaa_fbo)
         
         # Read pixels from framebuffer
         data = self.fbo.read(components=4, alignment=1)
@@ -272,6 +297,8 @@ class BlockRenderer3D:
         self.vao.release()
         self.vbo.release()
         self.ibo.release()
+        if self.msaa_fbo:
+            self.msaa_fbo.release()
         self.fbo.release()
         self.program.release()
         self.ctx.release()

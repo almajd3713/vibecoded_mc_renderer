@@ -38,6 +38,7 @@ class MachineRenderer:
         output_size: int = 128,
         emissive_strength: float = 1.0,
         camera_height: float = 1.5,
+        samples: int = 4,
     ) -> Image.Image:
         """
         Render a GregTech machine with casing, overlays, and emissive layers.
@@ -50,6 +51,7 @@ class MachineRenderer:
             output_size: Size of output image
             emissive_strength: Strength of emissive glow (0.0-1.0)
             camera_height: Camera Y position (1.0=acute/sharp, 1.5=standard, 2.0=wide/top-down)
+            samples: MSAA samples for anti-aliasing (0=off, 2/4/8/16=quality)
         
         Returns:
             Rendered machine image
@@ -100,7 +102,7 @@ class MachineRenderer:
             right_face.save(f'debug_right_face_{machine_name}.png')
         
         # Create isometric cube with correct face assignment
-        result = create_isometric_cube(top_face, left_face, right_face, output_size, camera_height)
+        result = create_isometric_cube(top_face, left_face, right_face, output_size, camera_height, samples)
         
         # Add emissive layer if active and emissive textures exist
         if active and emissive_strength > 0:
@@ -118,7 +120,8 @@ class MachineRenderer:
                     Image.new("RGBA", casing_side.size, (0, 0, 0, 0)),
                     emissive_right_face,
                     output_size,
-                    camera_height
+                    camera_height,
+                    samples
                 )
                 result = create_emissive_layer(result, emissive_cube, emissive_strength)
         

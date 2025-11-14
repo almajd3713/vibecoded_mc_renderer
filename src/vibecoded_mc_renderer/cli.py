@@ -251,6 +251,7 @@ def render_machine(
     material: Optional[str] = typer.Option(None, "--material", "-m", help="Material override for casing color"),
     emissive_strength: float = typer.Option(1.0, "--emissive", "-e", help="Emissive glow strength (0.0-1.0)"),
     camera_height: float = typer.Option(1.5, "--camera-height", "-c", help="Camera angle (1.0=acute, 1.5=standard, 2.0=wide)"),
+    samples: int = typer.Option(4, "--samples", help="MSAA anti-aliasing samples (0=off, 2/4/8/16 for quality)"),
 ) -> None:
     """Render a GregTech machine with voltage tier and overlays."""
     try:
@@ -273,6 +274,7 @@ def render_machine(
                 output_size=size,
                 emissive_strength=emissive_strength,
                 camera_height=camera_height,
+                samples=samples,
             )
 
             # Ensure output directory exists
