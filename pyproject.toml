@@ -38,9 +38,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/vibecoded/vibecoded-mc-renderer"
-Repository = "https://github.com/vibecoded/vibecoded-mc-renderer"
-Issues = "https://github.com/vibecoded/vibecoded-mc-renderer/issues"
+Homepage = "https://github.com/almajd3713/vibecoded_mc_renderer"
+Repository = "https://github.com/almajd3713/vibecoded_mc_renderer"
+Issues = "https://github.com/almajd3713/vibecoded_mc_renderer/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -52,7 +52,7 @@ dev = [
 ]
 
 [project.scripts]
-mcrender = "vibecoded_mc_renderer.__main__:main"
+mcrender-block = "vibecoded_mc_renderer.__main__:main"
 
 [tool.black]
 line-length = 100
