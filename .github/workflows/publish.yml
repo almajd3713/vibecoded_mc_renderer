@@ -10,7 +10,6 @@ on:
         required: true
         type: choice
         options:
-          - testpypi
           - pypi
 
 jobs:
@@ -18,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: ${{ github.event.inputs.environment || 'pypi' }}
-      url: ${{ github.event.inputs.environment == 'testpypi' && 'https://test.pypi.org/p/vibecoded-mc-renderer' || 'https://pypi.org/p/vibecoded-mc-renderer' }}
+      url: ${{ 'https://pypi.org/p/mcrender-block' }}
     permissions:
       id-token: write  # For trusted publishing
     
@@ -40,13 +39,6 @@ jobs:
     
     - name: Check package
       run: twine check dist/*
-    
-    - name: Publish to Test PyPI
-      if: github.event.inputs.environment == 'testpypi'
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
-        skip-existing: true
     
     - name: Publish to PyPI
       if: github.event_name == 'release' || github.event.inputs.environment == 'pypi'

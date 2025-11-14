@@ -1,8 +1,8 @@
-# VibeCoded Minecraft Renderer
+# Minecraft Block Renderer
 
-![CI](https://github.com/vibecoded/vibecoded-mc-renderer/workflows/CI/badge.svg)
-[![PyPI version](https://badge.fury.io/py/vibecoded-mc-renderer.svg)](https://pypi.org/project/vibecoded-mc-renderer/)
-[![Python Versions](https://img.shields.io/pypi/pyversions/vibecoded-mc-renderer.svg)](https://pypi.org/project/vibecoded-mc-renderer/)
+![CI](https://github.com/almajd3713/vibecoded_mc_renderer/workflows/CI/badge.svg)
+[![PyPI version](https://badge.fury.io/py/mcrender-block.svg)](https://pypi.org/project/mcrender-block/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/mcrender-block.svg)](https://pypi.org/project/mcrender-block/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Python CLI tool for rendering Minecraft blocks from jar files (vanilla or modded) into isometric PNG images.
@@ -23,14 +23,14 @@ A Python CLI tool for rendering Minecraft blocks from jar files (vanilla or modd
 ### From PyPI
 
 ```bash
-pip install vibecoded-mc-renderer
+pip install mcrender-block
 ```
 
 ### From source
 
 ```bash
-git clone https://github.com/vibecoded/vibecoded-mc-renderer.git
-cd vibecoded-mc-renderer
+git clone https://github.com/almajd3713/vibecoded_mc_renderer.git
+cd vibecoded_mc_renderer
 pip install -e .
 ```
 
