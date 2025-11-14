@@ -403,6 +403,7 @@ def batch_gregtech(
         help="Include active state variants for machines (may fail for animated machines)"
     ),
     size: int = typer.Option(128, "--size", "-s", help="Output image size"),
+    samples: int = typer.Option(4, "--samples", help="MSAA anti-aliasing samples (0=off, 2/4/8/16 for quality)"),
 ) -> None:
     """Batch render GregTech machines, materials, or cables."""
     try:
@@ -439,6 +440,7 @@ def batch_gregtech(
                                     tier=tier,
                                     active=False,
                                     output_size=size,
+                                    samples=samples,
                                 )
                                 output_path = output_dir / f"{machine_name}_{tier}.png"
                                 image.save(output_path)
@@ -454,6 +456,7 @@ def batch_gregtech(
                                         tier=tier,
                                         active=True,
                                         output_size=size,
+                                        samples=samples,
                                     )
                                     output_path = output_dir / f"{machine_name}_{tier}_active.png"
                                     image.save(output_path)
